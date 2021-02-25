@@ -1,18 +1,16 @@
-interface Games {
-  popular: Array<string>;
-  newGames: Array<string>;
-  upcoming: Array<string>;
-  searched: Array<string>;
-}
+import { GamesActionTypes, GamesTypes } from "../types";
 
-const initState: Games = {
+const initState: GamesTypes = {
   popular: [],
   newGames: [],
   upcoming: [],
   searched: [],
 };
 
-const gamesReducer = (state: Games = initState, action: any) => {
+const gamesReducer = (
+  state = initState,
+  action: GamesActionTypes
+): GamesTypes => {
   switch (action.type) {
     case "FETCH_GAMES":
       return {

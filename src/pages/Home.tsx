@@ -1,12 +1,15 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { loadGames } from "../actions/gamesActions";
+import { useDispatch, useSelector } from "react-redux";
+import { loadGames } from "../store/actions/gamesActions";
+import { RootState } from "../store/reducers";
 
 const Home: React.FC = () => {
   const dispatch = useDispatch();
   React.useEffect(() => {
     dispatch(loadGames());
-  });
+  }, [dispatch]);
+  const games = useSelector((state: RootState) => state.games);
+  console.log(games);
 
   return (
     <div>

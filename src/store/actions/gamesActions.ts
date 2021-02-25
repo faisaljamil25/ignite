@@ -1,9 +1,8 @@
 import axios from "axios";
-import { popularGamesURL } from "../api";
-import { upcomingGamesURL } from "../api";
-import { newGamesURL } from "../api";
+import { Dispatch } from "redux";
+import { popularGamesURL, upcomingGamesURL, newGamesURL } from "../../api";
 
-export const loadGames = () => async (dispatch: any) => {
+export const loadGames = () => async (dispatch: Dispatch) => {
   const popularGamesData = await axios.get(popularGamesURL());
   const upcomingGamesData = await axios.get(upcomingGamesURL());
   const newGamesData = await axios.get(newGamesURL());
