@@ -4,6 +4,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { Box, makeStyles } from "@material-ui/core";
+import { Games } from "../store/types";
 
 const useStyles = makeStyles((theme) => ({
   padding: {
@@ -20,18 +21,25 @@ const useStyles = makeStyles((theme) => ({
 interface DialogProps {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  name: string;
-  released: string;
-  image: string;
+  game: Games;
+  description: string;
+  rating: number;
 }
 
 const GameDialog: React.FC<DialogProps> = ({
   open,
   setOpen,
-  name,
-  released,
-  image,
+  game,
+  description,
+  rating,
 }) => {
+  const {
+    name,
+    released,
+    background_image,
+    platforms,
+    short_screenshots,
+  } = game;
   const classes = useStyles();
   const handleClose = () => {
     setOpen(false);
@@ -52,16 +60,9 @@ const GameDialog: React.FC<DialogProps> = ({
         <DialogContent className={classes.padding}>
           <DialogContentText id="scroll-dialog-description" tabIndex={-1}>
             <Box textAlign="center">
-              <img src={image} alt={name} width="80%" />
+              <img src={background_image} alt={name} width="80%" />
             </Box>
-            {[...new Array(50)]
-              .map(
-                () => `Cras mattis consectetur purus sit amet fermentum.
-Cras justo odio, dapibus ac facilisis in, egestas eget quam.
-Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-Praesent commodo cursus magna, vel scelerisque nisl consectetur et.`
-              )
-              .join("\n")}
+            {description}
           </DialogContentText>
         </DialogContent>
       </Dialog>

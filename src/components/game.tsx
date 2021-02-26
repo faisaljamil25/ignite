@@ -5,6 +5,10 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardMedia from "@material-ui/core/CardMedia";
 import { CardHeader, Grid } from "@material-ui/core";
 import GameDialog from "./gameDialog";
+import { useDispatch, useSelector } from "react-redux";
+import loadGameDetails from "../store/actions/gameDetailsActions";
+import { RootState } from "../store/reducers";
+import { Games } from "../store/types";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -24,14 +28,28 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface GameProps {
-  name: string;
-  released: string;
-  image: string;
+  game: Games;
 }
 
-const Game: React.FC<GameProps> = ({ name, released, image }) => {
+const Game: React.FC<GameProps> = ({ game }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [open, setOpen] = React.useState<boolean>(false);
+
+  const gameDialog = () => {
+    dispatch(loadGameDetails(id));
+    setOpen(true);
+  };
+  const {
+    id,
+    name,
+    released,
+    background_image,
+    platforms,
+    short_screenshots,
+  } = game;
+  const { gameData } = useSelector((state: RootState) => state.gameDetails);
+  const { description_raw, rating } = gameData;
 
   return (
     <Grid
@@ -43,11 +61,11 @@ const Game: React.FC<GameProps> = ({ name, released, image }) => {
       <GameDialog
         open={open}
         setOpen={setOpen}
-        name={name}
-        released={released}
-        image={image}
+        game={game}
+        description={description_raw}
+        rating={rating}
       />
-      <Card className={classes.card} raised onClick={() => setOpen(true)}>
+      <Card className={classes.card} raised onClick={gameDialog}>
         <CardActionArea>
           <CardHeader
             className={classes.header}
@@ -55,7 +73,11 @@ const Game: React.FC<GameProps> = ({ name, released, image }) => {
             subheader={released}
             titleTypographyProps={{ variant: "body1" }}
           />
-          <CardMedia className={classes.media} image={image} title={name} />
+          <CardMedia
+            className={classes.media}
+            image={background_image}
+            title={name}
+          />
         </CardActionArea>
       </Card>
     </Grid>

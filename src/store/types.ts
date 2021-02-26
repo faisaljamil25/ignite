@@ -11,34 +11,35 @@ export interface ScreenShots {
 export interface Games {
   id: number;
   name: string;
-  image: string;
   released: string;
   background_image: string;
   platforms: Array<Platform>;
   short_screenshots: Array<ScreenShots>;
 }
-export interface IndvGame {
-  id: number;
-  name: string;
-  description: string;
-  rating: number;
-}
-
 export interface GamesTypes {
   popular: Array<Games>;
   newGames: Array<Games>;
   upcoming: Array<Games>;
   searched: Array<Games>;
 }
-export interface IndvGameTypes {
-  gameData: Array<IndvGame>;
-}
 
 export interface GamesActionTypes {
   type: string;
   payload: GamesTypes;
 }
-export interface IndvGameActionTypes {
+export interface GameDetails {
+  id: number;
+  name: string;
+  description_raw: string;
+  rating: number;
+  released: string;
+  background_image: string;
+}
+export interface GameDetailsTypes {
+  gameData: GameDetails;
+}
+
+export interface GameDetailsActionTypes {
   type: string;
-  payload: IndvGameTypes;
+  payload: GameDetailsTypes;
 }

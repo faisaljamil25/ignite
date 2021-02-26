@@ -1,13 +1,8 @@
 import axios from "axios";
 import { Dispatch } from "redux";
-import {
-  popularGamesURL,
-  upcomingGamesURL,
-  newGamesURL,
-  gameURL,
-} from "../../api";
+import { popularGamesURL, upcomingGamesURL, newGamesURL } from "../../api";
 
-export const loadGames = () => async (dispatch: Dispatch) => {
+const loadGames = () => async (dispatch: Dispatch) => {
   const popularGamesData = await axios.get(popularGamesURL());
   const upcomingGamesData = await axios.get(upcomingGamesURL());
   const newGamesData = await axios.get(newGamesURL());
@@ -21,13 +16,4 @@ export const loadGames = () => async (dispatch: Dispatch) => {
   });
 };
 
-export const loadIndvgame = (id: number) => async (dispatch: Dispatch) => {
-  const getGameURL = `${gameURL()}games/${id} `;
-  const game = await axios.get(getGameURL);
-  dispatch({
-    type: "INDIVIDUAL_GAME",
-    payload: {
-      gameData: game.data,
-    },
-  });
-};
+export default loadGames;

@@ -2,7 +2,7 @@ import { Box, Grid, makeStyles, Theme, Typography } from "@material-ui/core";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Game from "../components/game";
-import { loadGames, loadIndvgame } from "../store/actions/gamesActions";
+import loadGames from "../store/actions/gamesActions";
 import { RootState } from "../store/reducers";
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -19,7 +19,6 @@ const GameList: React.FC = () => {
   const dispatch = useDispatch();
   React.useEffect(() => {
     dispatch(loadGames());
-    dispatch(loadIndvgame(339958));
   }, [dispatch]);
   const { popular, upcoming, newGames } = useSelector(
     (state: RootState) => state.games
@@ -33,13 +32,8 @@ const GameList: React.FC = () => {
         </Typography>
         <Grid container justify="flex-start" alignItems="center">
           {popular.map((game) => (
-            <Grid item xs={10} sm={6} md={4}>
-              <Game
-                name={game.name}
-                released={game.released}
-                image={game.background_image}
-                key={game.id}
-              />
+            <Grid item xs={10} sm={6} md={4} key={game.id}>
+              <Game game={game} />
             </Grid>
           ))}
         </Grid>
@@ -53,10 +47,7 @@ const GameList: React.FC = () => {
           {newGames.map((game) => (
             <Grid item xs={10} sm={6} md={4}>
               <Game
-                name={game.name}
-                released={game.released}
-                image={game.background_image}
-                key={game.id}
+                game={game}
               />
             </Grid>
           ))}
@@ -71,10 +62,7 @@ const GameList: React.FC = () => {
           {upcoming.map((game) => (
             <Grid item xs={10} sm={6} md={4}>
               <Game
-                name={game.name}
-                released={game.released}
-                image={game.background_image}
-                key={game.id}
+                game={game}
               />
             </Grid>
           ))}
