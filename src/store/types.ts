@@ -3,6 +3,9 @@ export interface Platform {
   name: string;
 }
 
+export interface Platforms {
+  platform: Platform;
+}
 export interface ScreenShots {
   id: number;
   image: string;
@@ -13,7 +16,7 @@ export interface Games {
   name: string;
   released: string;
   background_image: string;
-  platforms: Array<Platform>;
+  platforms: Array<Platforms>;
   short_screenshots: Array<ScreenShots>;
 }
 export interface GamesTypes {
