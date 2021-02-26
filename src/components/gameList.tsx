@@ -11,7 +11,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   gameTitle: {
     margin: theme.spacing(4),
-    color: "#b05cff",
+    color: "#e25822",
+    fontFamily: "Abril Fatface",
   },
 }));
 const GameList: React.FC = () => {
@@ -32,23 +33,21 @@ const GameList: React.FC = () => {
         </Typography>
         <Grid container justify="flex-start" alignItems="center">
           {popular.map((game) => (
-            <Grid item xs={10} sm={6} md={4} key={game.id}>
+            <Grid item xs={12} sm={6} md={4} key={game.id}>
               <Game game={game} />
             </Grid>
           ))}
         </Grid>
       </Box>
-      {/* <Box>
+      <Box>
         {" "}
         <Typography variant="h4" className={classes.gameTitle}>
           New Games
         </Typography>
-        <Grid container justify="center" alignItems="center">
+        <Grid container justify="flex-start" alignItems="center">
           {newGames.map((game) => (
             <Grid item xs={10} sm={6} md={4}>
-              <Game
-                game={game}
-              />
+              <Game game={game} />
             </Grid>
           ))}
         </Grid>
@@ -58,16 +57,14 @@ const GameList: React.FC = () => {
         <Typography variant="h4" className={classes.gameTitle}>
           Upcoming Games
         </Typography>
-        <Grid container justify="center" alignItems="center">
+        <Grid container justify="flex-start" alignItems="center">
           {upcoming.map((game) => (
             <Grid item xs={10} sm={6} md={4}>
-              <Game
-                game={game}
-              />
+              <Game game={game} />
             </Grid>
           ))}
         </Grid>
-      </Box> */}
+      </Box>
     </div>
   );
 };

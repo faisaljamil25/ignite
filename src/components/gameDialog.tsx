@@ -3,20 +3,94 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { Box, makeStyles } from "@material-ui/core";
+import {
+  Box,
+  Grid,
+  Hidden,
+  makeStyles,
+  Tooltip,
+  Typography,
+} from "@material-ui/core";
 import { Games } from "../store/types";
+import StarIcon from "@material-ui/icons/Star";
+import StarHalfIcon from "@material-ui/icons/StarHalf";
+import StarOutlineIcon from "@material-ui/icons/StarOutline";
 
 const useStyles = makeStyles((theme) => ({
-  padding: {
-    padding: theme.spacing(4, 5, 2),
-    [theme.breakpoints.up("lg")]: {
-      padding: theme.spacing(10, 25, 4),
+  dialogTitle: {
+    padding: theme.spacing(10, 25, 2),
+    [theme.breakpoints.down("md")]: {
+      padding: theme.spacing(6, 15, 1),
     },
-    [theme.breakpoints.up("sm")]: {
-      padding: theme.spacing(8, 15, 2),
+    [theme.breakpoints.down("xs")]: {
+      padding: theme.spacing(4, 6, 1),
     },
   },
+  dialogContent: {
+    padding: theme.spacing(2, 25, 2),
+    [theme.breakpoints.down("md")]: {
+      padding: theme.spacing(1, 15, 1),
+    },
+    [theme.breakpoints.down("xs")]: {
+      padding: theme.spacing(1, 6, 1),
+    },
+  },
+  image: {
+    width: "80%",
+    [theme.breakpoints.down("md")]: {
+      width: "90%",
+    },
+    [theme.breakpoints.down("xs")]: {
+      width: "100%",
+    },
+  },
+  star: {
+    color: "#e25822",
+  },
 }));
+
+const Ratings: React.FC<{ ratings: number }> = ({ ratings }) => {
+  const classes = useStyles();
+  const star = Math.floor(ratings);
+  const halfStar = ratings - star > 0 ? 1 : 0;
+  const outline = 5 - star - halfStar;
+  return (
+    <>
+      {[...new Array(star)].map((value) => (
+        <StarIcon className={classes.star} key={value} />
+      ))}
+      {[...new Array(halfStar)].map((value) => (
+        <StarHalfIcon className={classes.star} key={value} />
+      ))}
+      {[...new Array(outline)].map((value) => (
+        <StarOutlineIcon className={classes.star} key={value} />
+      ))}
+    </>
+  );
+};
+
+const getPlatform = (platform: string) => {
+  switch (platform) {
+    case "PC":
+      return "pc.svg";
+    case "PlayStation 4":
+    case "PlayStation 5":
+      return "playstation.svg";
+    case "iOS":
+    case "macOS":
+      return "apple.svg";
+    case "Xbox One":
+      return "xbox.svg";
+    case "Nintendo Switch":
+      return "nintendo.svg";
+    case "Android":
+      return "android.svg";
+    case "Web":
+      return "steam.svg";
+    default:
+      return "gamepad.svg";
+  }
+};
 
 interface DialogProps {
   open: boolean;
@@ -54,15 +128,60 @@ const GameDialog: React.FC<DialogProps> = ({
         aria-describedby="scroll-dialog-description"
         maxWidth="lg"
       >
-        <DialogTitle id="scroll-dialog-title" className={classes.padding}>
-          {name} {released}
+        <DialogTitle id="scroll-dialog-title" className={classes.dialogTitle}>
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="flex-start"
+          >
+            <Typography variant="h4" style={{ fontFamily: "Abril Fatface" }}>
+              {name}
+            </Typography>
+            <Hidden xsDown>
+              <Box textAlign="right">
+                <Typography variant="h5">Platforms</Typography>
+                <Box
+                  display="flex"
+                  justifyContent="flex-end"
+                  alignItems="center"
+                  flexWrap="wrap"
+                >
+                  {platforms.map((data) => (
+                    <Box key={data.platform.id} ml={2} mt={2}>
+                      <Tooltip title={data.platform.name}>
+                        <img
+                          src={getPlatform(data.platform.name)}
+                          alt={data.platform.name}
+                          width="40px"
+                        />
+                      </Tooltip>
+                    </Box>
+                  ))}
+                </Box>
+              </Box>
+            </Hidden>
+          </Box>
         </DialogTitle>
-        <DialogContent className={classes.padding}>
+        <DialogContent className={classes.dialogContent}>
           <DialogContentText id="scroll-dialog-description" tabIndex={-1}>
-            <Box textAlign="center">
-              <img src={background_image} alt={name} width="80%" />
+            <Box mb={4} display="flex" alignItems="flex-start">
+              {<Ratings ratings={rating} />} &nbsp; {rating}
             </Box>
-            {description}
+            <Box textAlign="center" mb={4}>
+              <img
+                src={background_image}
+                alt={name}
+                className={classes.image}
+              />
+            </Box>
+            <Box mb={4}>{description}</Box>
+            <Grid container justify="flex-start" alignItems="center">
+              {short_screenshots.map((img) => (
+                <Grid item xs={6} sm={4} md={3} key={img.id}>
+                  <img src={img.image} alt={name} width="90%" />
+                </Grid>
+              ))}
+            </Grid>
           </DialogContentText>
         </DialogContent>
       </Dialog>

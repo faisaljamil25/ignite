@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   card: {
     // maxWidth: 345,
-    minWidth: "90%",
+    width: "90%",
   },
   header: {
     textAlign: "center",
@@ -71,7 +71,7 @@ const Game: React.FC<GameProps> = ({ game }) => {
             className={classes.header}
             title={name}
             subheader={released}
-            titleTypographyProps={{ variant: "body1" }}
+            titleTypographyProps={{ variant: "h6" }}
           />
           <CardMedia
             className={classes.media}
