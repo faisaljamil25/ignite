@@ -2,7 +2,7 @@ import { Box, Grid, makeStyles, Theme, Typography } from "@material-ui/core";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Game from "../components/game";
-import { loadGames } from "../store/actions/gamesActions";
+import { loadGames, loadIndvgame } from "../store/actions/gamesActions";
 import { RootState } from "../store/reducers";
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -19,6 +19,7 @@ const GameList: React.FC = () => {
   const dispatch = useDispatch();
   React.useEffect(() => {
     dispatch(loadGames());
+    dispatch(loadIndvgame(339958));
   }, [dispatch]);
   const { popular, upcoming, newGames } = useSelector(
     (state: RootState) => state.games
@@ -30,7 +31,7 @@ const GameList: React.FC = () => {
         <Typography variant="h4" className={classes.gameTitle}>
           Popular Games
         </Typography>
-        <Grid container justify="center" alignItems="center">
+        <Grid container justify="flex-start" alignItems="center">
           {popular.map((game) => (
             <Grid item xs={10} sm={6} md={4}>
               <Game
@@ -43,7 +44,7 @@ const GameList: React.FC = () => {
           ))}
         </Grid>
       </Box>
-      <Box>
+      {/* <Box>
         {" "}
         <Typography variant="h4" className={classes.gameTitle}>
           New Games
@@ -78,7 +79,7 @@ const GameList: React.FC = () => {
             </Grid>
           ))}
         </Grid>
-      </Box>
+      </Box> */}
     </div>
   );
 };
