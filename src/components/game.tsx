@@ -8,6 +8,7 @@ import GameDialog from "./gameDialog";
 import { useDispatch } from "react-redux";
 import loadGameDetails from "../store/actions/gameDetailsActions";
 import { Games } from "../store/types";
+import { smallImage } from "../util";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -59,7 +60,7 @@ const Game: React.FC<GameProps> = ({ game }) => {
           />
           <CardMedia
             className={classes.media}
-            image={background_image}
+            image={smallImage(background_image, 640)}
             title={name}
           />
         </CardActionArea>

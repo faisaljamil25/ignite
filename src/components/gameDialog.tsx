@@ -17,6 +17,7 @@ import { Games } from "../store/types";
 import StarIcon from "@material-ui/icons/Star";
 import StarHalfIcon from "@material-ui/icons/StarHalf";
 import StarOutlineIcon from "@material-ui/icons/StarOutline";
+import { smallImage } from "../util";
 
 const useStyles = makeStyles((theme) => ({
   dialogTitle: {
@@ -167,7 +168,7 @@ const GameDialog: React.FC<DialogProps> = ({ open, setOpen, game }) => {
               </Box>
               <Box textAlign="center" mb={4}>
                 <img
-                  src={background_image}
+                  src={smallImage(background_image, 1280)}
                   alt={name}
                   className={classes.image}
                 />
@@ -175,8 +176,12 @@ const GameDialog: React.FC<DialogProps> = ({ open, setOpen, game }) => {
               <Box mb={4}>{description_raw}</Box>
               <Grid container justify="flex-start" alignItems="center">
                 {short_screenshots.map((img) => (
-                  <Grid item xs={6} sm={4} md={3} key={img.id}>
-                    <img src={img.image} alt={name} width="90%" />
+                  <Grid item xs={6} key={img.id}>
+                    <img
+                      src={smallImage(img.image, 640)}
+                      alt={name}
+                      width="90%"
+                    />
                   </Grid>
                 ))}
               </Grid>
