@@ -27,3 +27,5 @@ export const popularGamesURL = () => `${base_url}${popular_games}`;
 export const upcomingGamesURL = () => `${base_url}${upcoming_games}`;
 export const newGamesURL = () => `${base_url}${newGames}`;
 export const gameURL = (game_id: number) => `${base_url}games/${game_id}`;
+export const searchURL = (game_name: string) =>
+  `${base_url}games?search=${game_name}&page_size=9`;

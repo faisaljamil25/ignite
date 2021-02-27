@@ -2,6 +2,8 @@ import { Box, makeStyles, Theme, Typography } from "@material-ui/core";
 import React from "react";
 import GameList from "../components/gameList";
 import WhatshotIcon from "@material-ui/icons/Whatshot";
+import { useDispatch } from "react-redux";
+import { searchGames } from "../store/actions/gamesActions";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -11,8 +13,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    padding: theme.spacing(2),
-    fontFamily: "Abril Fatface",
+    padding: theme.spacing(1),
   },
   searchBox: {
     display: "flex",
@@ -21,10 +22,13 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   input: {
     lineHeight: "140%",
-    width: "30%",
-    padding: theme.spacing(2, 2),
+    width: "35%",
+    padding: theme.spacing(1, 2),
     borderRadius: 0,
     border: "none",
+    fontFamily: "Montserrat",
+    fontWeight: "bold",
+    fontSize: "1rem",
     boxShadow:
       "0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%)",
     [theme.breakpoints.down("sm")]: {
@@ -33,7 +37,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   button: {
-    padding: theme.spacing(2, 6),
+    padding: theme.spacing(1, 3),
     borderRadius: 0,
     border: "none",
     background: "#e25822",
@@ -51,16 +55,44 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const Home: React.FC = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
+  const [textInput, setTextInput] = React.useState<string>("");
+
+  const inputHandler = (e: any) => {
+    e.preventDefault();
+    setTextInput(e.target.value);
+  };
+  const submitSearch = () => {
+    dispatch(searchGames(textInput));
+    setTextInput("");
+  };
+  const clearSearch = () => {
+    dispatch({ type: "CLEAR_SEARCH" });
+    setTextInput("");
+  };
   return (
     <div className={classes.root}>
       <Box mb={4} mt={2} textAlign="center" className={classes.title}>
-        <WhatshotIcon fontSize="large" />
-        <Typography variant="h4">IGNITE</Typography>
+        <div
+          onClick={clearSearch}
+          style={{ cursor: "pointer" }}
+          className={classes.title}
+        >
+          <WhatshotIcon fontSize="large" />
+          <Typography variant="h4">IGNITE</Typography>
+        </div>
       </Box>
       <Box mb={12} className={classes.searchBox}>
-        <input id="search" className={classes.input} />
-        <button className={classes.button}>Search</button>
+        <input
+          value={textInput}
+          id="search"
+          className={classes.input}
+          onInput={inputHandler}
+        />
+        <button className={classes.button} onClick={submitSearch}>
+          Search
+        </button>
       </Box>
       <Box>
         <GameList />

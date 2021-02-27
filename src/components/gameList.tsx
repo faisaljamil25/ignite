@@ -21,11 +21,28 @@ const GameList: React.FC = () => {
   React.useEffect(() => {
     dispatch(loadGames());
   }, [dispatch]);
-  const { popular, upcoming, newGames } = useSelector(
+  const { popular, upcoming, newGames, searched } = useSelector(
     (state: RootState) => state.games
   );
   return (
     <div className={classes.root}>
+      {searched.length ? (
+        <Box>
+          {" "}
+          <Typography variant="h4" className={classes.gameTitle}>
+            Searched Games
+          </Typography>
+          <Grid container justify="flex-start" alignItems="center">
+            {searched.map((game) => (
+              <Grid item xs={12} sm={6} md={4} key={game.id}>
+                <Game game={game} />
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+      ) : (
+        ""
+      )}
       <Box>
         {" "}
         <Typography variant="h4" className={classes.gameTitle}>

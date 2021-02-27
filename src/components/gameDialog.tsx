@@ -142,12 +142,12 @@ const GameDialog: React.FC<DialogProps> = ({ open, setOpen, game }) => {
                     flexWrap="wrap"
                   >
                     {platforms.map((data) => (
-                      <Box key={data.platform.id} ml={2} mt={2}>
+                      <Box key={data.platform.id} ml={3} mt={2}>
                         <Tooltip title={data.platform.name}>
                           <img
                             src={getPlatform(data.platform.name)}
                             alt={data.platform.name}
-                            width="40px"
+                            width="30px"
                           />
                         </Tooltip>
                       </Box>
