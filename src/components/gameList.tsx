@@ -63,7 +63,7 @@ const GameList: React.FC = () => {
         </Typography>
         <Grid container justify="flex-start" alignItems="center">
           {newGames.map((game) => (
-            <Grid item xs={10} sm={6} md={4} key={game.id}>
+            <Grid item xs={12} sm={6} md={4} key={game.id}>
               <Game game={game} />
             </Grid>
           ))}
@@ -76,7 +76,7 @@ const GameList: React.FC = () => {
         </Typography>
         <Grid container justify="flex-start" alignItems="center">
           {upcoming.map((game) => (
-            <Grid item xs={10} sm={6} md={4} key={game.id}>
+            <Grid item xs={12} sm={6} md={4} key={game.id}>
               <Game game={game} />
             </Grid>
           ))}
