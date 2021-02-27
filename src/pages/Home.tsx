@@ -1,4 +1,4 @@
-import { Box, makeStyles, Theme, Typography } from "@material-ui/core";
+import { Box, makeStyles, Theme, Typography, Grow } from "@material-ui/core";
 import React from "react";
 import GameList from "../components/gameList";
 import WhatshotIcon from "@material-ui/icons/Whatshot";
@@ -72,32 +72,34 @@ const Home: React.FC = () => {
     setTextInput("");
   };
   return (
-    <div className={classes.root}>
-      <Box mb={4} mt={2} textAlign="center" className={classes.title}>
-        <div
-          onClick={clearSearch}
-          style={{ cursor: "pointer" }}
-          className={classes.title}
-        >
-          <WhatshotIcon fontSize="large" />
-          <Typography variant="h4">IGNITE</Typography>
-        </div>
-      </Box>
-      <Box mb={12} className={classes.searchBox}>
-        <input
-          value={textInput}
-          id="search"
-          className={classes.input}
-          onInput={inputHandler}
-        />
-        <button className={classes.button} onClick={submitSearch}>
-          Search
-        </button>
-      </Box>
-      <Box>
-        <GameList />
-      </Box>
-    </div>
+    <Grow in={true}>
+      <div className={classes.root}>
+        <Box mb={4} mt={2} textAlign="center" className={classes.title}>
+          <div
+            onClick={clearSearch}
+            style={{ cursor: "pointer" }}
+            className={classes.title}
+          >
+            <WhatshotIcon fontSize="large" />
+            <Typography variant="h4">IGNITE</Typography>
+          </div>
+        </Box>
+        <Box mb={12} className={classes.searchBox}>
+          <input
+            value={textInput}
+            id="search"
+            className={classes.input}
+            onInput={inputHandler}
+          />
+          <button className={classes.button} onClick={submitSearch}>
+            Search
+          </button>
+        </Box>
+        <Box>
+          <GameList />
+        </Box>
+      </div>
+    </Grow>
   );
 };
 
