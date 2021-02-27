@@ -1,4 +1,6 @@
 import React from "react";
+import { RootState } from "../store/reducers";
+import { useSelector } from "react-redux";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
@@ -96,96 +98,93 @@ interface DialogProps {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   game: Games;
-  description: string;
-  rating: number;
 }
 
-const GameDialog: React.FC<DialogProps> = ({
-  open,
-  setOpen,
-  game,
-  description,
-  rating,
-}) => {
-  const {
-    name,
-    released,
-    background_image,
-    platforms,
-    short_screenshots,
-  } = game;
+const GameDialog: React.FC<DialogProps> = ({ open, setOpen, game }) => {
+  const { name, background_image, platforms, short_screenshots } = game;
   const classes = useStyles();
+  const { gameData, isLoading } = useSelector(
+    (state: RootState) => state.gameDetails
+  );
+  const { description_raw, rating } = gameData;
+
   const handleClose = () => {
     setOpen(false);
   };
   return (
-    <div>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        scroll="body"
-        aria-labelledby="scroll-dialog-title"
-        aria-describedby="scroll-dialog-description"
-        maxWidth="lg"
-      >
-        <DialogTitle id="scroll-dialog-title" className={classes.dialogTitle}>
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="flex-start"
-          >
-            <Typography variant="h4" style={{ fontFamily: "Abril Fatface" }}>
-              {name}
-            </Typography>
-            <Hidden xsDown>
-              <Box textAlign="right">
-                <Typography variant="h5">Platforms</Typography>
-                <Box
-                  display="flex"
-                  justifyContent="flex-end"
-                  alignItems="center"
-                  flexWrap="wrap"
-                >
-                  {platforms.map((data) => (
-                    <Box key={data.platform.id} ml={2} mt={2}>
-                      <Tooltip title={data.platform.name}>
-                        <img
-                          src={getPlatform(data.platform.name)}
-                          alt={data.platform.name}
-                          width="40px"
-                        />
-                      </Tooltip>
-                    </Box>
-                  ))}
+    <>
+      {!isLoading && (
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          scroll="body"
+          aria-labelledby="scroll-dialog-title"
+          aria-describedby="scroll-dialog-description"
+          maxWidth="lg"
+        >
+          <DialogTitle id="scroll-dialog-title" className={classes.dialogTitle}>
+            <Box
+              display="flex"
+              justifyContent="space-between"
+              alignItems="flex-start"
+            >
+              <Typography variant="h4" style={{ fontFamily: "Abril Fatface" }}>
+                {name}
+              </Typography>
+              <Hidden xsDown>
+                <Box textAlign="right">
+                  <Typography variant="h5">Platforms</Typography>
+                  <Box
+                    display="flex"
+                    justifyContent="flex-end"
+                    alignItems="center"
+                    flexWrap="wrap"
+                  >
+                    {platforms.map((data) => (
+                      <Box key={data.platform.id} ml={2} mt={2}>
+                        <Tooltip title={data.platform.name}>
+                          <img
+                            src={getPlatform(data.platform.name)}
+                            alt={data.platform.name}
+                            width="40px"
+                          />
+                        </Tooltip>
+                      </Box>
+                    ))}
+                  </Box>
                 </Box>
+              </Hidden>
+            </Box>
+          </DialogTitle>
+          <DialogContent className={classes.dialogContent}>
+            <DialogContentText
+              id="scroll-dialog-description"
+              tabIndex={-1}
+              style={{ outline: "none" }}
+            >
+              <Box mb={4} display="flex" alignItems="flex-start">
+                {<Ratings ratings={rating} />} &nbsp; {rating}
               </Box>
-            </Hidden>
-          </Box>
-        </DialogTitle>
-        <DialogContent className={classes.dialogContent}>
-          <DialogContentText id="scroll-dialog-description" tabIndex={-1}>
-            <Box mb={4} display="flex" alignItems="flex-start">
-              {<Ratings ratings={rating} />} &nbsp; {rating}
-            </Box>
-            <Box textAlign="center" mb={4}>
-              <img
-                src={background_image}
-                alt={name}
-                className={classes.image}
-              />
-            </Box>
-            <Box mb={4}>{description}</Box>
-            <Grid container justify="flex-start" alignItems="center">
-              {short_screenshots.map((img) => (
-                <Grid item xs={6} sm={4} md={3} key={img.id}>
-                  <img src={img.image} alt={name} width="90%" />
-                </Grid>
-              ))}
-            </Grid>
-          </DialogContentText>
-        </DialogContent>
-      </Dialog>
-    </div>
+              <Box textAlign="center" mb={4}>
+                <img
+                  src={background_image}
+                  alt={name}
+                  className={classes.image}
+                />
+              </Box>
+              <Box mb={4}>{description_raw}</Box>
+              <Grid container justify="flex-start" alignItems="center">
+                {short_screenshots.map((img) => (
+                  <Grid item xs={6} sm={4} md={3} key={img.id}>
+                    <img src={img.image} alt={name} width="90%" />
+                  </Grid>
+                ))}
+              </Grid>
+            </DialogContentText>
+          </DialogContent>
+        </Dialog>
+      )}
+    </>
   );
 };
 

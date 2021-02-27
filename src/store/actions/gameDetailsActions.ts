@@ -3,6 +3,9 @@ import { Dispatch } from "redux";
 import { gameURL } from "../../api";
 
 const loadGameDetails = (id: number) => async (dispatch: Dispatch) => {
+  dispatch({
+    type: "LOADING",
+  });
   const game = await axios.get(gameURL(id));
   dispatch({
     type: "GET_GAME_DETAILS",

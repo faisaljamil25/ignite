@@ -40,6 +40,7 @@ export interface GameDetails {
 }
 export interface GameDetailsTypes {
   gameData: GameDetails;
+  isLoading: boolean;
 }
 
 export interface GameDetailsActionTypes {

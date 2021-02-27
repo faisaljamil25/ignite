@@ -9,6 +9,7 @@ const initState: GameDetailsTypes = {
     released: "",
     background_image: "",
   },
+  isLoading: true,
 };
 
 const GameDetailsReducer = (
@@ -20,6 +21,12 @@ const GameDetailsReducer = (
       return {
         ...state,
         gameData: action.payload.gameData,
+        isLoading: false,
+      };
+    case "LOADING":
+      return {
+        ...state,
+        isLoading: true,
       };
     default:
       return { ...state };

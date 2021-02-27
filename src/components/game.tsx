@@ -5,9 +5,8 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardMedia from "@material-ui/core/CardMedia";
 import { CardHeader, Grid } from "@material-ui/core";
 import GameDialog from "./gameDialog";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import loadGameDetails from "../store/actions/gameDetailsActions";
-import { RootState } from "../store/reducers";
 import { Games } from "../store/types";
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -40,16 +39,7 @@ const Game: React.FC<GameProps> = ({ game }) => {
     dispatch(loadGameDetails(id));
     setOpen(true);
   };
-  const {
-    id,
-    name,
-    released,
-    background_image,
-    platforms,
-    short_screenshots,
-  } = game;
-  const { gameData } = useSelector((state: RootState) => state.gameDetails);
-  const { description_raw, rating } = gameData;
+  const { id, name, released, background_image } = game;
 
   return (
     <Grid
@@ -58,13 +48,7 @@ const Game: React.FC<GameProps> = ({ game }) => {
       alignItems="center"
       className={classes.root}
     >
-      <GameDialog
-        open={open}
-        setOpen={setOpen}
-        game={game}
-        description={description_raw}
-        rating={rating}
-      />
+      <GameDialog open={open} setOpen={setOpen} game={game} />
       <Card className={classes.card} raised onClick={gameDialog}>
         <CardActionArea>
           <CardHeader
