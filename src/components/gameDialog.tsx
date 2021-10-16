@@ -1,10 +1,10 @@
-import React from "react";
-import { RootState } from "../store/reducers";
-import { useSelector } from "react-redux";
-import Dialog from "@material-ui/core/Dialog";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
+import React from 'react';
+import { RootState } from '../store/reducers';
+import { useSelector } from 'react-redux';
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import {
   Box,
   Grid,
@@ -12,43 +12,43 @@ import {
   makeStyles,
   Tooltip,
   Typography,
-} from "@material-ui/core";
-import { Games } from "../store/types";
-import StarIcon from "@material-ui/icons/Star";
-import StarHalfIcon from "@material-ui/icons/StarHalf";
-import StarOutlineIcon from "@material-ui/icons/StarOutline";
-import { smallImage } from "../util";
+} from '@material-ui/core';
+import { Games } from '../store/types';
+import StarIcon from '@material-ui/icons/Star';
+import StarHalfIcon from '@material-ui/icons/StarHalf';
+import StarOutlineIcon from '@material-ui/icons/StarOutline';
+import { smallImage } from '../util';
 
 const useStyles = makeStyles((theme) => ({
   dialogTitle: {
     padding: theme.spacing(10, 25, 2),
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down('md')]: {
       padding: theme.spacing(6, 15, 1),
     },
-    [theme.breakpoints.down("xs")]: {
+    [theme.breakpoints.down('xs')]: {
       padding: theme.spacing(4, 6, 1),
     },
   },
   dialogContent: {
     padding: theme.spacing(2, 25, 2),
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down('md')]: {
       padding: theme.spacing(1, 15, 1),
     },
-    [theme.breakpoints.down("xs")]: {
+    [theme.breakpoints.down('xs')]: {
       padding: theme.spacing(1, 6, 1),
     },
   },
   image: {
-    width: "80%",
-    [theme.breakpoints.down("md")]: {
-      width: "90%",
+    width: '80%',
+    [theme.breakpoints.down('md')]: {
+      width: '90%',
     },
-    [theme.breakpoints.down("xs")]: {
-      width: "100%",
+    [theme.breakpoints.down('xs')]: {
+      width: '100%',
     },
   },
   star: {
-    color: "#e25822",
+    color: '#e25822',
   },
 }));
 
@@ -59,14 +59,14 @@ const Ratings: React.FC<{ ratings: number }> = ({ ratings }) => {
   const outline = 5 - star - halfStar;
   return (
     <>
-      {[...new Array(star)].map((value) => (
-        <StarIcon className={classes.star} key={value} />
+      {[...new Array(star)].map((value, index) => (
+        <StarIcon className={classes.star} key={index} />
       ))}
-      {[...new Array(halfStar)].map((value) => (
-        <StarHalfIcon className={classes.star} key={value} />
+      {[...new Array(halfStar)].map((value, index) => (
+        <StarHalfIcon className={classes.star} key={index} />
       ))}
-      {[...new Array(outline)].map((value) => (
-        <StarOutlineIcon className={classes.star} key={value} />
+      {[...new Array(outline)].map((value, index) => (
+        <StarOutlineIcon className={classes.star} key={index} />
       ))}
     </>
   );
@@ -74,24 +74,24 @@ const Ratings: React.FC<{ ratings: number }> = ({ ratings }) => {
 
 const getPlatform = (platform: string) => {
   switch (platform) {
-    case "PC":
-      return "pc.svg";
-    case "PlayStation 4":
-    case "PlayStation 5":
-      return "playstation.svg";
-    case "iOS":
-    case "macOS":
-      return "apple.svg";
-    case "Xbox One":
-      return "xbox.svg";
-    case "Nintendo Switch":
-      return "nintendo.svg";
-    case "Android":
-      return "android.svg";
-    case "Web":
-      return "steam.svg";
+    case 'PC':
+      return 'pc.svg';
+    case 'PlayStation 4':
+    case 'PlayStation 5':
+      return 'playstation.svg';
+    case 'iOS':
+    case 'macOS':
+      return 'apple.svg';
+    case 'Xbox One':
+      return 'xbox.svg';
+    case 'Nintendo Switch':
+      return 'nintendo.svg';
+    case 'Android':
+      return 'android.svg';
+    case 'Web':
+      return 'steam.svg';
     default:
-      return "gamepad.svg";
+      return 'gamepad.svg';
   }
 };
 
@@ -118,28 +118,28 @@ const GameDialog: React.FC<DialogProps> = ({ open, setOpen, game }) => {
         <Dialog
           open={open}
           onClose={handleClose}
-          scroll="body"
-          aria-labelledby="scroll-dialog-title"
-          aria-describedby="scroll-dialog-description"
-          maxWidth="lg"
+          scroll='body'
+          aria-labelledby='scroll-dialog-title'
+          aria-describedby='scroll-dialog-description'
+          maxWidth='lg'
         >
-          <DialogTitle id="scroll-dialog-title" className={classes.dialogTitle}>
+          <DialogTitle id='scroll-dialog-title' className={classes.dialogTitle}>
             <Box
-              display="flex"
-              justifyContent="space-between"
-              alignItems="flex-start"
+              display='flex'
+              justifyContent='space-between'
+              alignItems='flex-start'
             >
-              <Typography variant="h4" style={{ fontFamily: "Abril Fatface" }}>
+              <Typography variant='h4' style={{ fontFamily: 'Abril Fatface' }}>
                 {name}
               </Typography>
               <Hidden xsDown>
-                <Box textAlign="right">
-                  <Typography variant="h5">Platforms</Typography>
+                <Box textAlign='right'>
+                  <Typography variant='h5'>Platforms</Typography>
                   <Box
-                    display="flex"
-                    justifyContent="flex-end"
-                    alignItems="center"
-                    flexWrap="wrap"
+                    display='flex'
+                    justifyContent='flex-end'
+                    alignItems='center'
+                    flexWrap='wrap'
                   >
                     {platforms.map((data) => (
                       <Box key={data.platform.id} ml={3} mt={2}>
@@ -147,7 +147,7 @@ const GameDialog: React.FC<DialogProps> = ({ open, setOpen, game }) => {
                           <img
                             src={getPlatform(data.platform.name)}
                             alt={data.platform.name}
-                            width="30px"
+                            width='30px'
                           />
                         </Tooltip>
                       </Box>
@@ -159,14 +159,14 @@ const GameDialog: React.FC<DialogProps> = ({ open, setOpen, game }) => {
           </DialogTitle>
           <DialogContent className={classes.dialogContent}>
             <DialogContentText
-              id="scroll-dialog-description"
+              id='scroll-dialog-description'
               tabIndex={-1}
-              style={{ outline: "none" }}
+              style={{ outline: 'none' }}
             >
-              <Box mb={4} display="flex" alignItems="flex-start">
+              <Box mb={4} display='flex' alignItems='flex-start'>
                 {<Ratings ratings={rating} />} &nbsp; {rating}
               </Box>
-              <Box textAlign="center" mb={4}>
+              <Box textAlign='center' mb={4}>
                 <img
                   src={smallImage(background_image, 1280)}
                   alt={name}
@@ -174,13 +174,13 @@ const GameDialog: React.FC<DialogProps> = ({ open, setOpen, game }) => {
                 />
               </Box>
               <Box mb={4}>{description_raw}</Box>
-              <Grid container justify="flex-start" alignItems="center">
+              <Grid container justify='flex-start' alignItems='center'>
                 {short_screenshots.map((img) => (
                   <Grid item xs={6} key={img.id}>
                     <img
                       src={smallImage(img.image, 640)}
                       alt={name}
-                      width="90%"
+                      width='90%'
                     />
                   </Grid>
                 ))}
